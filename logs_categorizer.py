@@ -1,12 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-analisador_logs_basico.py
-Analisa logs, detecta erros e gera relatórios (CSV + Markdown), sem severity/hints.
-Detalhado CSV agora contém apenas: error_name, file, line, message.
-"""
-
 import argparse
 import csv
 import json
