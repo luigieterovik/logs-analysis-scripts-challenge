@@ -17,9 +17,6 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Tuple, Optional
 
-# =========================
-# 1) Padrões de erro
-# =========================
 ERROR_PATTERNS = [
     {"name": "NetworkError", "regex": r"nsUtils.*err:\s*5|network\s+list.*err:\s*5"},
     {"name": "TunnelError", "regex": r"CTunnelMgr.*No tunnel found|tunnel.*not\s+found"},
@@ -32,12 +29,9 @@ ERROR_PATTERNS = [
     {"name": "Auth_TicketMissing", "regex": r"Ticket ID was not found|Failed to find session identifiers|session LUID was not found"},
 ]
 
-# =========================
-# 2) Regex auxiliares
-# =========================
 TS_PATTERNS = [
-    r"\[(\d{2}/\d{2}/\d{4}).*?\|",  # [10/04/2025 | ...]
-    r"(\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2})",  # 2025-04-10 12:34:56
+    r"\[(\d{2}/\d{2}/\d{4}).*?\|", 
+    r"(\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2})", 
 ]
 UUID_REGEX = r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
 SESSION_ID_REGEX = r"session id[:\s]\s*(\d+)"
@@ -67,9 +61,6 @@ def extract_session_id(line: str) -> Optional[str]:
     m = re.search(SESSION_ID_REGEX, line, re.IGNORECASE)
     return m.group(1) if m else None
 
-# =========================
-# 3) Varredura de arquivos
-# =========================
 def iter_input_files(inputs: List[str]) -> List[Path]:
     files: List[Path] = []
     for inp in inputs:
@@ -82,9 +73,6 @@ def iter_input_files(inputs: List[str]) -> List[Path]:
             print(f"[WARN] Caminho não encontrado: {inp}", file=sys.stderr)
     return sorted(set(files))
 
-# =========================
-# 4) Análise de linhas
-# =========================
 def analyze_files(files: List[Path]) -> Tuple[List[Dict], Dict]:
     occurrences: List[Dict] = []
     summary: Dict[str, Dict] = {}
@@ -102,8 +90,6 @@ def analyze_files(files: List[Path]) -> Tuple[List[Dict], Dict]:
                             sid = extract_session_id(line)
                             msg = line.strip()
 
-                            # Guarda dados completos internamente (útil para futuras expansões),
-                            # mas não escreveremos ts/uuid/sid no CSV detalhado.
                             occ = {
                                 "error_name": name,
                                 "file": str(fpath),
@@ -151,13 +137,9 @@ def analyze_files(files: List[Path]) -> Tuple[List[Dict], Dict]:
 
     return occurrences, summary
 
-# =========================
-# 5) Escrita dos relatórios
-# =========================
 def write_csv_occurrences(occurrences: List[Dict], outdir: Path, basename: str = "erros_detalhados") -> Path:
     outpath = outdir / f"{basename}.csv"
     with outpath.open("w", newline="", encoding="utf-8") as csvfile:
-        # REMOVIDO: timestamp, session_uuid, session_id
         fieldnames = ["error_name", "file", "line", "message"]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
@@ -201,9 +183,6 @@ def write_markdown(summary: Dict[str, Dict], outdir: Path, basename: str = "RELA
         md.write("\n".join(lines))
     return outpath
 
-# =========================
-# 6) CLI
-# =========================
 def main():
     parser = argparse.ArgumentParser(description="Analisa logs, detecta erros e gera relatórios (CSV + Markdown).")
     parser.add_argument("--input", "-i", nargs="+", required=True,
