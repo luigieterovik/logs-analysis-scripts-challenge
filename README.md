@@ -17,7 +17,10 @@ pip install -r requirements.txt
 Conteúdo do arquivo requirements.txt:
 
 ``
-openai>=1.0.0  
+openai>=1.0.0
+``
+</br>
+``
 matplotlib
 ``
 
