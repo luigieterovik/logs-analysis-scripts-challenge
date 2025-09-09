@@ -84,8 +84,7 @@ charts/
 ├── bar_top.png  
 ├── barh_top.png  
 ├── pie_distribution.png  
-├── pareto_top.png  
-└── bar_by_severity.png  
+└── pareto_top.png  
 
 
 ---
