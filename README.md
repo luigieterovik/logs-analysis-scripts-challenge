@@ -30,7 +30,7 @@ matplotlib
 
 1. Acesse: <a href="https://open.bigmodel.cn/">Zhipu BigModel</a>.  
 2. Crie uma conta.  
-3. No console, vá em "API Key → 新建 API Key".  
+3. Na plataforma, vá em "API Key → Create a new API Key".  
 4. Copie a sua chave (formato parecido com `xxxxxxxxxxxxx.MfPJtEy3cCtoPIn3`).  
 5. Não compartilhe nem comite a chave em repositórios públicos.  
 
