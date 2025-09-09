@@ -1,16 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-charts_from_summary.py
-Gera gráficos bonitos (barra, barra horizontal, pizza, pareto) a partir do CSV de resumo.
-Opcionalmente lê um CSV enriquecido para agrupar por severidade.
-Saídas: apenas PNG.
-
-Uso:
-  python charts_from_summary.py --summary ./out/fase3_erros_resumo.csv --out ./out/charts --top 12
-Opcional:
-  --enriched ./out_enriched/enriched_errors.csv
-"""
 
 import argparse
 import csv
@@ -18,7 +7,6 @@ from pathlib import Path
 from typing import Dict, List, Optional
 import matplotlib.pyplot as plt
 
-# -------- Ler dados --------
 def read_counts(summary_csv: Path) -> List[Dict]:
     rows = []
     with summary_csv.open("r", encoding="utf-8") as f:
@@ -48,7 +36,6 @@ def read_severity(enriched_csv: Optional[Path]) -> Dict[str, str]:
                 sev[name] = s
     return sev
 
-# -------- Utilidades --------
 def ensure_out(outdir: Path):
     outdir.mkdir(parents=True, exist_ok=True)
 
@@ -57,7 +44,6 @@ def save_png(fig, out_png: Path):
     fig.savefig(out_png, dpi=160, bbox_inches="tight")
     plt.close(fig)
 
-# -------- Gráficos --------
 def bar_top(errors: List[Dict], outdir: Path, top: int):
     data = errors[:top]
     labels = [r["error_name"] for r in data]
@@ -137,7 +123,6 @@ def bar_by_severity(errors: List[Dict], sevmap: Dict[str, str], outdir: Path, to
     plt.ylabel("Ocorrências")
     save_png(fig, outdir / "bar_by_severity.png")
 
-# -------- Main --------
 def main():
     parser = argparse.ArgumentParser(description="Gera gráficos a partir do CSV de resumo.")
     parser.add_argument("--summary", required=True, help="CSV do resumo (error_name,count,...)")
