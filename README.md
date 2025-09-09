@@ -101,7 +101,7 @@ Envia o relatório em Markdown para a IA Zhipu GLM-4.5, que retorna análise com
 
 Uso:
 `
-python ai_analyzer.py SUA_API_KEY results/logs_RELATORIO_SUMARIO.md -o results/analise.md
+python ai_analyzer.py --api_key SUA_API_KEY -i results/logs_RELATORIO_SUMARIO.md -o results/analise.md
 `
 
 Saída: um novo arquivo `.md` com a análise detalhada.  
