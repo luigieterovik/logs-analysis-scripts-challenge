@@ -75,7 +75,7 @@ Gera visualizações em PNG a partir do CSV resumo:
 
 Uso:
 `
-python chart_generator.py --summary results/logs_erros_resumo.csv --out charts/ --top 10
+python chart_generator.py --summary results/logs_erros_resumo.csv --out charts/
 `
 
 Saída esperada:
