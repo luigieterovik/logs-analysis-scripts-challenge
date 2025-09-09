@@ -11,7 +11,6 @@ SYSTEM = (
     "Seja direto, assertivo e priorize recomendações práticas."
 )
 
-# Prompt fixo para 'perguntar para a IA sobre os erros'
 USER_PREFIX = (
     "Analise o conteúdo abaixo (um relatório/summary em Markdown). "
     "Para cada erro citado, produza em Markdown:\n"
@@ -31,8 +30,6 @@ def write_md(path: Path, content: str):
     print(f"[ok] gravado: {path.resolve()}")
 
 def analyze_text(client: OpenAI, text: str) -> str:
-    # Para arquivos grandes, a Zhipu costuma aguentar bem, mas se quiser
-    # ser conservador, corte em pedaços de ~12k chars e mande em mensagens separadas.
     CHUNK = 12000
     messages = [{"role": "system", "content": SYSTEM}]
 
